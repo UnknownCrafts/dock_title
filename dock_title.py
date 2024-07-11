@@ -51,13 +51,14 @@ def printApps():
     print("{}{}{:>4} {} {:>41}{}\n".format(textStyle.underline, textStyle.BOLD, "No.", "App Name", "App Title", textStyle.reset))
     app_number = 1
     for app in all_apps:
-        app_name = app["tile-data"]["file-data"]["_CFURLString"].replace("%20", " ").split("/")[-2].replace(".app", "")
-        if "file-label" in app["tile-data"]:
-            app_title = app["tile-data"]["file-label"]
-        else:
-            app_title = ""
-        print("{:>3}. {} {:>40}".format(app_number, app_name, app_title))
-        app_number += 1
+        if app["tile-type"] not in ["spacer-tile", "small-spacer-tile"]: # Ignore spacer tiles
+            app_name = app["tile-data"]["file-data"]["_CFURLString"].replace("%20", " ").split("/")[-2].replace(".app", "")
+            if "file-label" in app["tile-data"]:
+                app_title = app["tile-data"]["file-label"]
+            else:
+                app_title = ""
+            print("{:>3}. {} {:>40}".format(app_number, app_name, app_title))
+            app_number += 1
 
 def deleteTitles(): # Erase all the titles of the apps in the dock
     print("\n> Erasing all titles...") 
