@@ -68,7 +68,8 @@ def deleteTitles(): # Erase all the titles of the apps in the dock
 def restoreTitles(): # Restore all the titles of the apps in the dock
     print("\n> Restoring all titles...")
     for app in all_apps:
-        app["tile-data"]["file-label"] = app["tile-data"]["file-data"]["_CFURLString"].replace("%20", " ").split("/")[-2].replace(".app", "")
+        if app["tile-type"] not in ["spacer-tile", "small-spacer-tile"]: # Ignore spacer tiles
+            app["tile-data"]["file-label"] = app["tile-data"]["file-data"]["_CFURLString"].replace("%20", " ").split("/")[-2].replace(".app", "")
 
 def writeChanges(): # Write the changes to the dock plist file and restart the dock
     print("> Writing changes to the dock plist file...")
